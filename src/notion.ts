@@ -48,6 +48,38 @@ class Notion {
       });
   }
 
+    /**
+   * Gets page data
+   */
+  getPageData(collectionId: string, collectionViewId: string, userTimeZone: string) {
+    return notionFetch({
+        endpoint: 'queryCollection',
+        creds: this.creds,
+        body: {
+            collectionId,
+            collectionViewId,
+            loader: {
+                limit: 70,
+                loadContentCover: true,
+                searchQuery: "",
+                type: "table",
+                userLocale: "en",
+                userTimeZone
+            },
+            query: {
+                aggregations: [{aggregator: "count"}]
+            }
+        }
+    })
+        .then((r: NotionResponse) => {
+        return r;
+    })
+        .catch((e) => {
+        handleNotionError(e);
+        return {};
+    });
+}
+
   /**
    * Gets the content of a page by ID as HTML
    * @param {string} pageId The ID of the notion page

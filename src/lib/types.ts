@@ -30,6 +30,11 @@ export type NotionResponse = {
         value: NotionObject;
       };
     };
+    collection: {
+      id: {
+        value: NotionObject;
+      };
+    };
   };
 };
 export type Options = {
