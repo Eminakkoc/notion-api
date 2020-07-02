@@ -19,7 +19,7 @@ const getAllBlocks = async ({
   limit: number,
   stack: Array<any>,
   chunkNumber: number,
-  res: { recordMap: {block: object } },
+  res: { recordMap: {block: object, collection: object } },
   resolve: Function,
   reject: Function,
   body?: object,
@@ -51,6 +51,10 @@ const getAllBlocks = async ({
               block: {
                 ...res.recordMap.block,
                 ...r.recordMap.block,
+              },
+              collection: {
+                ...res.recordMap.collection,
+                ...r.recordMap.collection,
               }
             }
           },
@@ -67,6 +71,10 @@ const getAllBlocks = async ({
             block: {
               ...res.recordMap.block,
               ...(r.recordMap || {}).block,
+            },
+            collection: {
+              ...res.recordMap.collection,
+              ...(r.recordMap || {}).collection,
             }
           }
         };
@@ -83,7 +91,14 @@ function request({
 }: {
   endpoint: string;
   creds: { token: string };
-  body?: { limit?: number, pageId: string };
+  body?: {
+    limit?: number,
+    pageId?: string,
+    collectionId?: string,
+    collectionViewId?: string,
+    loader?: object,
+    query?: object
+  };
 }): Promise<NotionResponse> {
   return new Promise((resolve, reject) => {
     getAllBlocks({
@@ -93,7 +108,7 @@ function request({
       stack: [],
       chunkNumber: 0,
       res: {
-        recordMap: { block: {} }
+        recordMap: { block: {}, collection: {} }
       },
       resolve,
       reject,
