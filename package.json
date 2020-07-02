@@ -6,7 +6,7 @@
   "main": "dist/notion.js",
   "types": "dist/notion.d.ts",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "tsc",
     "start": "node dist/index.js"
   },
